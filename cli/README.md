@@ -11,8 +11,7 @@
 </div>
 
 > [!IMPORTANT]
-> Genql is building a cloud platform to automate SDK generation in multiple languages, docs website with examples, changelog website and more. 
-> Fill [this form](https://tally.so/r/mK1GWM) if you are interested!
+> Fork of the amazing [Genql by Morse](https://github.com/remorses/genql). Adapted to [basehub.com](https://basehub.com/)'s specific needs.
 
 Read the [quick start guide](https://genql.dev/docs) to generate your client and start writing queries.
 

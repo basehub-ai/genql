@@ -1,32 +1,35 @@
 {
-    "name": "root",
-    "private": true,
-    "version": "2.0.0",
-    "scripts": {
-        "genall": "pnpm run -r gen",
-        "tscall": "pnpm run -r --filter '@genql/*' tsc",
-        "buildall": "pnpm run -r --filter '@genql/*' build",
-        "test": "pnpm run -r test",
-        "watch": "pnpm run -r watch",
-        "play": "node -r sucrase/register cli/src/cli.ts",
-        "integration": "cd integration-tests && pnpm gen && tsc && pnpm test",
-        "examplecli": "pnpm play -o example/generated -e https://graphql-compose.herokuapp.com/northwind/",
-        "publ": "pnpm buildall && lerna publish minor",
-        "runexample": "node -r sucrase/register example/example.ts"
-    },
-    "engines": {
-        "node": ">=18.0.0"
-    },
-    "devDependencies": {
-        "@types/mocha": "^10.0.1",
-        "esno": "0.14.1",
-        "graphql": "^16.6.0",
-        "lerna": "^6.0.3",
-        "native-fetch": "^4.0.2",
-        "sucrase": "^3.29.0",
-        "typescript": "~5.3.3"
-    },
-    "dependencies": {
-        "@changesets/cli": "^2.27.1"
-    }
+  "name": "root",
+  "private": true,
+  "version": "2.0.0",
+  "scripts": {
+    "genall": "pnpm run -r gen",
+    "tscall": "pnpm run -r --filter '@basehub/*' tsc",
+    "buildall": "pnpm run -r --filter '@basehub/*' build",
+    "test": "pnpm run -r test",
+    "watch": "pnpm run -r watch",
+    "play": "node -r sucrase/register cli/src/cli.ts",
+    "integration": "cd integration-tests && pnpm gen && tsc && pnpm test",
+    "examplecli": "pnpm play -o example/generated -e https://graphql-compose.herokuapp.com/northwind/",
+    "publ": "pnpm buildall && lerna publish minor",
+    "runexample": "node -r sucrase/register example/example.ts",
+    "version:packages": "pnpm changeset version",
+    "release": "pnpm buildall && pnpm genall && pnpm test && pnpm changeset publish"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "esno": "0.14.1",
+    "graphql": "^16.6.0",
+    "lerna": "^6.0.3",
+    "native-fetch": "^4.0.2",
+    "sucrase": "^3.29.0",
+    "typescript": "~5.3.3"
+  },
+  "dependencies": {
+    "@basehub/genql": "^6.3.4",
+    "@changesets/cli": "^2.27.1"
+  }
 }

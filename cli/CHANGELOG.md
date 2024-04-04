@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 6.3.5
+
+### Patch Changes
+
+- Log changes
+
 ## 6.3.4
 
 ### Patch Changes
