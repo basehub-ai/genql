@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 6.3.4
+
+### Patch Changes
+
+- Testing basehub fork
+
 ## 6.3.3
 
 ### Patch Changes
