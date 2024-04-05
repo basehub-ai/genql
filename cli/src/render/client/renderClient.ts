@@ -40,7 +40,7 @@ ${renderClientTypesImports({ mutationType, queryType, subscriptionType })}
   export { GenqlError }
 
   import types from './types'
-  export * from './schema'
+  export { fragmentOn } from './schema'
   const typeMap = linkTypeMap(types as any)
 
   ${renderClientType({ mutationType, queryType, subscriptionType })}

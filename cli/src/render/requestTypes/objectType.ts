@@ -90,10 +90,13 @@ export const objectType = (
     )
 
     ctx.addCodeBlock(
-        `${typeComment(type)}export interface ${requestTypeName(
+        // don't export these object types. users will be able to create fragmentOn these, so no need.
+        `${typeComment(type)}interface ${requestTypeName(
             type,
         )}{\n${fieldStrings.join('\n')}\n}`,
     )
+
+    return { rootTypeName: type.name, selectionTypeName: requestTypeName(type) }
 }
 
 export const toArgsString = (field: GraphQLField<any, any, any>) => {
