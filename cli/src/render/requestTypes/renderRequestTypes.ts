@@ -69,7 +69,7 @@ function renderAlias({
 }) {
     if (type && requestTypeName(type) !== name) {
         // TODO make the camel case or kebab case an option
-        return `type ${name} = ${requestTypeName(type)}`
+        return `export type ${name} = ${requestTypeName(type)}`
     }
     return ''
 }

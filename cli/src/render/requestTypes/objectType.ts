@@ -90,8 +90,7 @@ export const objectType = (
     )
 
     ctx.addCodeBlock(
-        // don't export these object types. users will be able to create fragmentOn these, so no need.
-        `${typeComment(type)}interface ${requestTypeName(
+        `${typeComment(type)}export interface ${requestTypeName(
             type,
         )}{\n${fieldStrings.join('\n')}\n}`,
     )
