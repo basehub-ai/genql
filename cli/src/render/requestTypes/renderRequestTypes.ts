@@ -105,11 +105,23 @@ export function fragmentOn<
 //   ? FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>
 //   : never;
 
+// credits: https://stackoverflow.com/a/54487392
+type OmitDistributive<T, K extends PropertyKey> = T extends any
+    ? T extends object
+        ? Id<OmitRecursively<T, K>>
+        : T
+    : never
+type Id<T> = {} & { [P in keyof T]: T[P] } // Cosmetic use only makes the tooltips expad the type can be removed
+type OmitRecursively<T, K extends PropertyKey> = Omit<
+    { [P in keyof T]: OmitDistributive<T[P], K> },
+    K
+>
+
 export namespace fragmentOn {
     export type infer<T> = T extends {
       __fragmentOn: infer U extends keyof FragmentsMap;
     }
-      ? FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>
+      ? OmitRecursively<FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>, "__fragmentOn">
       : never;
   }
 
