@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.3
+
+### Patch Changes
+
+-   recursively omit \_\_fragmentOn type
+
 ## 7.0.2
 
 ### Patch Changes
