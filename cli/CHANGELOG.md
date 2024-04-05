@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.2
+
+### Patch Changes
+
+-   export also QueryGenqlSelection and QueryResult
+
 ## 7.0.1
 
 ### Patch Changes
