@@ -134,7 +134,7 @@ export interface InterfaceNotImplemented {
 
 export interface InputWithRequiredFields {requiredField: Scalars['String'],optionalField?: (Scalars['String'] | null)}
 
-export interface QueryGenqlSelection{
+interface QueryGenqlSelection{
     /** Some description */
     repository?: (RepositoryGenqlSelection & { __args: {name: Scalars['String'], owner?: (Scalars['String'] | null)} })
     queryWithDefaultArgs?: { __args: {input?: (DefaultArgsInput | null), defaultValue?: (Scalars['Int'] | null), requiredButDefault?: Scalars['Int']} } | boolean | number
@@ -154,14 +154,14 @@ export interface QueryGenqlSelection{
 
 export interface DefaultArgsInput {string?: Scalars['String']}
 
-export interface RecursiveTypeGenqlSelection{
+interface RecursiveTypeGenqlSelection{
     value?: boolean | number
     recurse?: (RecursiveTypeGenqlSelection & { __args?: {arg?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface RepositoryGenqlSelection{
+interface RepositoryGenqlSelection{
     createdAt?: boolean | number
     forks?: (ForkConnectionGenqlSelection & { __args?: {filter?: (Scalars['String'] | null)} })
     scalarButWithRequiredArgs?: { __args: {x: Scalars['Int']} }
@@ -170,27 +170,27 @@ export interface RepositoryGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface ForkConnectionGenqlSelection{
+interface ForkConnectionGenqlSelection{
     edges?: ForkEdgeGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface ForkEdgeGenqlSelection{
+interface ForkEdgeGenqlSelection{
     cursor?: boolean | number
     node?: ForkGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface ForkGenqlSelection{
+interface ForkGenqlSelection{
     name?: boolean | number
     number?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface UserGenqlSelection{
+interface UserGenqlSelection{
     /** Some description */
     name?: boolean | number
     common?: boolean | number
@@ -199,7 +199,7 @@ export interface UserGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface SubscriptionGenqlSelection{
+interface SubscriptionGenqlSelection{
     user?: UserGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -211,7 +211,7 @@ export interface AccountGenqlSelection{
     __typename?: boolean | number
 }
 
-export interface GuestGenqlSelection{
+interface GuestGenqlSelection{
     anonymous?: boolean | number
     common?: boolean | number
     commonButDiffType?: boolean | number
@@ -219,7 +219,7 @@ export interface GuestGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface HouseGenqlSelection{
+interface HouseGenqlSelection{
     owner?: UserGenqlSelection
     x?: boolean | number
     y?: boolean | number
@@ -227,7 +227,7 @@ export interface HouseGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface BankGenqlSelection{
+interface BankGenqlSelection{
     address?: boolean | number
     x?: boolean | number
     y?: boolean | number
@@ -235,7 +235,7 @@ export interface BankGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface PointGenqlSelection{
+interface PointGenqlSelection{
     x?: boolean | number
     y?: boolean | number
     on_House?: HouseGenqlSelection
@@ -244,7 +244,7 @@ export interface PointGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface ClientErrorGenqlSelection{
+interface ClientErrorGenqlSelection{
     message?: boolean | number
     on_ClientErrorNameAlreadyTaken?: ClientErrorNameAlreadyTakenGenqlSelection
     on_ClientErrorNameInvalid?: ClientErrorNameInvalidGenqlSelection
@@ -252,21 +252,21 @@ export interface ClientErrorGenqlSelection{
     __scalar?: boolean | number
 }
 
-export interface ClientErrorNameAlreadyTakenGenqlSelection{
+interface ClientErrorNameAlreadyTakenGenqlSelection{
     message?: boolean | number
     ownProp1?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface ClientErrorNameInvalidGenqlSelection{
+interface ClientErrorNameInvalidGenqlSelection{
     message?: boolean | number
     ownProp2?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface ClientErrorWithoutInterfaceGenqlSelection{
+interface ClientErrorWithoutInterfaceGenqlSelection{
     ownProp3?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -280,7 +280,7 @@ export interface GenericErrorGenqlSelection{
     __typename?: boolean | number
 }
 
-export interface InterfaceNotImplementedGenqlSelection{
+interface InterfaceNotImplementedGenqlSelection{
     id?: boolean | number
     title?: boolean | number
     url?: boolean | number
@@ -289,6 +289,100 @@ export interface InterfaceNotImplementedGenqlSelection{
     __typename?: boolean | number
     __scalar?: boolean | number
 }
+
+type FragmentsMap = {
+  Query: {
+    root: Query,
+    selection: QueryGenqlSelection,
+}
+  RecursiveType: {
+    root: RecursiveType,
+    selection: RecursiveTypeGenqlSelection,
+}
+  Repository: {
+    root: Repository,
+    selection: RepositoryGenqlSelection,
+}
+  ForkConnection: {
+    root: ForkConnection,
+    selection: ForkConnectionGenqlSelection,
+}
+  ForkEdge: {
+    root: ForkEdge,
+    selection: ForkEdgeGenqlSelection,
+}
+  Fork: {
+    root: Fork,
+    selection: ForkGenqlSelection,
+}
+  User: {
+    root: User,
+    selection: UserGenqlSelection,
+}
+  Subscription: {
+    root: Subscription,
+    selection: SubscriptionGenqlSelection,
+}
+  Guest: {
+    root: Guest,
+    selection: GuestGenqlSelection,
+}
+  House: {
+    root: House,
+    selection: HouseGenqlSelection,
+}
+  Bank: {
+    root: Bank,
+    selection: BankGenqlSelection,
+}
+  Point: {
+    root: Point,
+    selection: PointGenqlSelection,
+}
+  ClientError: {
+    root: ClientError,
+    selection: ClientErrorGenqlSelection,
+}
+  ClientErrorNameAlreadyTaken: {
+    root: ClientErrorNameAlreadyTaken,
+    selection: ClientErrorNameAlreadyTakenGenqlSelection,
+}
+  ClientErrorNameInvalid: {
+    root: ClientErrorNameInvalid,
+    selection: ClientErrorNameInvalidGenqlSelection,
+}
+  ClientErrorWithoutInterface: {
+    root: ClientErrorWithoutInterface,
+    selection: ClientErrorWithoutInterfaceGenqlSelection,
+}
+  InterfaceNotImplemented: {
+    root: InterfaceNotImplemented,
+    selection: InterfaceNotImplementedGenqlSelection,
+}
+}
+
+import { FieldsSelection } from "./runtime";
+
+export function fragmentOn<
+    TypeName extends keyof FragmentsMap,
+    Selection extends FragmentsMap[TypeName]["selection"],
+>(name: TypeName, fields: Selection) {
+  return { __fragmentOn: name, ...fields } as const;
+}
+  
+// export type InferFragment<T> = T extends { __fragmentOn: infer U extends keyof FragmentsMap }
+//   ? FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>
+//   : never;
+
+export namespace fragmentOn {
+    export type infer<T> = T extends {
+      __fragmentOn: infer U extends keyof FragmentsMap;
+    }
+      ? FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>
+      : never;
+  }
+
+
 
 
     const Query_possibleTypes: string[] = ['Query']

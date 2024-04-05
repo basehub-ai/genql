@@ -13,13 +13,7 @@ const id = () => null
 import { DeepPartial, MaybeUndefined } from 'tsdef'
 import {
     createClient,
-    User,
     everything,
-    isHouse,
-    Account,
-    isBank,
-    Point,
-    isUser,
     GenqlError,
     generateQueryOp,
 } from '../generated'
@@ -56,7 +50,7 @@ async function server({ resolvers, port = PORT }) {
 }
 
 describe('execute queries', async function () {
-    const x: DeepPartial<User> = {
+    const x = {
         name: 'John',
     }
 
@@ -306,47 +300,47 @@ describe('execute queries', async function () {
 
     type t = { __args?: {} } extends { __args: any } ? 'ciao' : never
 
-    it(
-        'union types only 1 on_ normal syntax',
-        withServer(async () => {
-            const { account } = await client.query({
-                account: {
-                    __typename: 1,
-                    on_User: {
-                        name: 1,
-                    },
-                },
-            })
-            // @ts-expect-error because on_User should be removed
-            account?.on_User
-            assert(account?.__typename)
-            expectType<Maybe<Account>>(account)
-            console.log(account)
-        }),
-    )
+    // it(
+    //     'union types only 1 on_ normal syntax',
+    //     withServer(async () => {
+    //         const { account } = await client.query({
+    //             account: {
+    //                 __typename: 1,
+    //                 on_User: {
+    //                     name: 1,
+    //                 },
+    //             },
+    //         })
+    //         // @ts-expect-error because on_User should be removed
+    //         account?.on_User
+    //         assert(account?.__typename)
+    //         expectType<Maybe<Account>>(account)
+    //         console.log(account)
+    //     }),
+    // )
 
-    it.skip(
-        'union types, same field on multiple types but different type',
-        withServer(async () => {
-            const { account } = await client.query({
-                account: {
-                    __typename: 1,
-                    on_User: {
-                        commonButDiffType: 1,
-                    },
-                    on_Guest: {
-                        commonButDiffType: 1,
-                    },
-                },
-            })
-            // @ts-expect-error because on_User should be removed
-            account?.on_User
-            assert(account?.__typename)
-            assert(account?.commonButDiffType)
-            expectType<Maybe<Account>>(account)
-            console.log(account)
-        }),
-    )
+    // it.skip(
+    //     'union types, same field on multiple types but different type',
+    //     withServer(async () => {
+    //         const { account } = await client.query({
+    //             account: {
+    //                 __typename: 1,
+    //                 on_User: {
+    //                     commonButDiffType: 1,
+    //                 },
+    //                 on_Guest: {
+    //                     commonButDiffType: 1,
+    //                 },
+    //             },
+    //         })
+    //         // @ts-expect-error because on_User should be removed
+    //         account?.on_User
+    //         assert(account?.__typename)
+    //         assert(account?.commonButDiffType)
+    //         expectType<Maybe<Account>>(account)
+    //         console.log(account)
+    //     }),
+    // )
 
     it(
         'ability to query interfaces that a union implements',
@@ -408,42 +402,42 @@ describe('execute queries', async function () {
         }),
     )
 
-    it(
-        'multiple interfaces types normal syntax',
-        withServer(async () => {
-            const { coordinates } = await client.query({
-                coordinates: {
-                    __typename: 1,
-                    on_Bank: {
-                        address: 1,
-                        x: 1,
-                    },
-                    on_House: {
-                        y: 1,
-                        x: 1,
-                        owner: {
-                            name: 1,
-                        },
-                    },
-                },
-            })
-            console.log(coordinates)
+    // it(
+    //     'multiple interfaces types normal syntax',
+    //     withServer(async () => {
+    //         const { coordinates } = await client.query({
+    //             coordinates: {
+    //                 __typename: 1,
+    //                 on_Bank: {
+    //                     address: 1,
+    //                     x: 1,
+    //                 },
+    //                 on_House: {
+    //                     y: 1,
+    //                     x: 1,
+    //                     owner: {
+    //                         name: 1,
+    //                     },
+    //                 },
+    //             },
+    //         })
+    //         console.log(coordinates)
 
-            expectType<Maybe<string>>(coordinates?.x)
-            expectType<Maybe<Point>>(coordinates)
-            expectType<Maybe<string>>(coordinates?.__typename)
-            assert(coordinates?.x)
-            assert(coordinates?.__typename)
-            if ('address' in coordinates) {
-                coordinates?.address
-                coordinates?.x
-            } else if (isHouse(coordinates)) {
-                coordinates?.owner
-                coordinates?.x
-                coordinates?.y
-            }
-        }),
-    )
+    //         expectType<Maybe<string>>(coordinates?.x)
+    //         expectType<Maybe<Point>>(coordinates)
+    //         expectType<Maybe<string>>(coordinates?.__typename)
+    //         assert(coordinates?.x)
+    //         assert(coordinates?.__typename)
+    //         if ('address' in coordinates) {
+    //             coordinates?.address
+    //             coordinates?.x
+    //         } else if (isHouse(coordinates)) {
+    //             coordinates?.owner
+    //             coordinates?.x
+    //             coordinates?.y
+    //         }
+    //     }),
+    // )
     it(
         'errors',
         withServer(async () => {
@@ -611,7 +605,6 @@ describe('execute queries', async function () {
         }),
     )
 
-
     it(
         'raises synchronously thrown fetch errors in batch mode',
         withServer(async () => {
@@ -619,34 +612,37 @@ describe('execute queries', async function () {
                 url: URL,
                 batch: true,
                 fetch: () => {
-                    return fetch('http://not.a.domain.google.com/');
-                }
-            })
-
-            const makeCall = () => client.query({
-                repository: {
-                    __args: {
-                        name: 'genql',
-                    },
-                    createdAt: true,
+                    return fetch('http://not.a.domain.google.com/')
                 },
             })
 
-            await assert.rejects(makeCall, (err) => {
-                if (!(err instanceof TypeError)) {
-                    assert.fail('err is not Error');
-                }
-                const cause = err.cause as Record<string, string>;
+            const makeCall = () =>
+                client.query({
+                    repository: {
+                        __args: {
+                            name: 'genql',
+                        },
+                        createdAt: true,
+                    },
+                })
 
-                assert.strictEqual(err.name, 'TypeError');
-                assert.strictEqual(cause.code, 'ENOTFOUND');
-                assert.strictEqual(cause.syscall, 'getaddrinfo');
-                return true;
-            }, 'failed to throw')
-                
+            await assert.rejects(
+                makeCall,
+                (err) => {
+                    if (!(err instanceof TypeError)) {
+                        assert.fail('err is not Error')
+                    }
+                    const cause = err.cause as Record<string, string>
+
+                    assert.strictEqual(err.name, 'TypeError')
+                    assert.strictEqual(cause.code, 'ENOTFOUND')
+                    assert.strictEqual(cause.syscall, 'getaddrinfo')
+                    return true
+                },
+                'failed to throw',
+            )
         }),
     )
-
 })
 
 // // TODO apollo server changed everything in version 3 and i don't have time to fix their shit

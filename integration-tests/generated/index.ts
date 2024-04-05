@@ -18,7 +18,7 @@ export type { FieldsSelection } from './runtime'
 export { GenqlError }
 
 import types from './types'
-export * from './schema'
+export { fragmentOn } from './schema'
 const typeMap = linkTypeMap(types as any)
 
 export interface Client {
