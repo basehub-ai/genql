@@ -134,7 +134,7 @@ export interface InterfaceNotImplemented {
 
 export interface InputWithRequiredFields {requiredField: Scalars['String'],optionalField?: (Scalars['String'] | null)}
 
-interface QueryGenqlSelection{
+export interface QueryGenqlSelection{
     /** Some description */
     repository?: (RepositoryGenqlSelection & { __args: {name: Scalars['String'], owner?: (Scalars['String'] | null)} })
     queryWithDefaultArgs?: { __args: {input?: (DefaultArgsInput | null), defaultValue?: (Scalars['Int'] | null), requiredButDefault?: Scalars['Int']} } | boolean | number
@@ -154,14 +154,14 @@ interface QueryGenqlSelection{
 
 export interface DefaultArgsInput {string?: Scalars['String']}
 
-interface RecursiveTypeGenqlSelection{
+export interface RecursiveTypeGenqlSelection{
     value?: boolean | number
     recurse?: (RecursiveTypeGenqlSelection & { __args?: {arg?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-interface RepositoryGenqlSelection{
+export interface RepositoryGenqlSelection{
     createdAt?: boolean | number
     forks?: (ForkConnectionGenqlSelection & { __args?: {filter?: (Scalars['String'] | null)} })
     scalarButWithRequiredArgs?: { __args: {x: Scalars['Int']} }
@@ -170,27 +170,27 @@ interface RepositoryGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface ForkConnectionGenqlSelection{
+export interface ForkConnectionGenqlSelection{
     edges?: ForkEdgeGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-interface ForkEdgeGenqlSelection{
+export interface ForkEdgeGenqlSelection{
     cursor?: boolean | number
     node?: ForkGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-interface ForkGenqlSelection{
+export interface ForkGenqlSelection{
     name?: boolean | number
     number?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-interface UserGenqlSelection{
+export interface UserGenqlSelection{
     /** Some description */
     name?: boolean | number
     common?: boolean | number
@@ -199,7 +199,7 @@ interface UserGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface SubscriptionGenqlSelection{
+export interface SubscriptionGenqlSelection{
     user?: UserGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -211,7 +211,7 @@ export interface AccountGenqlSelection{
     __typename?: boolean | number
 }
 
-interface GuestGenqlSelection{
+export interface GuestGenqlSelection{
     anonymous?: boolean | number
     common?: boolean | number
     commonButDiffType?: boolean | number
@@ -219,7 +219,7 @@ interface GuestGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface HouseGenqlSelection{
+export interface HouseGenqlSelection{
     owner?: UserGenqlSelection
     x?: boolean | number
     y?: boolean | number
@@ -227,7 +227,7 @@ interface HouseGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface BankGenqlSelection{
+export interface BankGenqlSelection{
     address?: boolean | number
     x?: boolean | number
     y?: boolean | number
@@ -235,7 +235,7 @@ interface BankGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface PointGenqlSelection{
+export interface PointGenqlSelection{
     x?: boolean | number
     y?: boolean | number
     on_House?: HouseGenqlSelection
@@ -244,7 +244,7 @@ interface PointGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface ClientErrorGenqlSelection{
+export interface ClientErrorGenqlSelection{
     message?: boolean | number
     on_ClientErrorNameAlreadyTaken?: ClientErrorNameAlreadyTakenGenqlSelection
     on_ClientErrorNameInvalid?: ClientErrorNameInvalidGenqlSelection
@@ -252,21 +252,21 @@ interface ClientErrorGenqlSelection{
     __scalar?: boolean | number
 }
 
-interface ClientErrorNameAlreadyTakenGenqlSelection{
+export interface ClientErrorNameAlreadyTakenGenqlSelection{
     message?: boolean | number
     ownProp1?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-interface ClientErrorNameInvalidGenqlSelection{
+export interface ClientErrorNameInvalidGenqlSelection{
     message?: boolean | number
     ownProp2?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-interface ClientErrorWithoutInterfaceGenqlSelection{
+export interface ClientErrorWithoutInterfaceGenqlSelection{
     ownProp3?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -280,7 +280,7 @@ export interface GenericErrorGenqlSelection{
     __typename?: boolean | number
 }
 
-interface InterfaceNotImplementedGenqlSelection{
+export interface InterfaceNotImplementedGenqlSelection{
     id?: boolean | number
     title?: boolean | number
     url?: boolean | number

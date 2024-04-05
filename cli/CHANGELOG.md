@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.1
+
+### Patch Changes
+
+-   bring back an export
+
 ## 7.0.0
 
 ### Major Changes

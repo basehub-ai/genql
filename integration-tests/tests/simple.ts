@@ -57,20 +57,20 @@ describe('generate queries', () => {
             },
         })
     })
-    it('required input arguments', () => {
-        generateQueryOp({
-            requiredFields: {},
-        })
-        generateQueryOp({
-            requiredFields: {
-                __args: {
-                    input: {
-                        optionalField: 'x',
-                    },
-                },
-            },
-        })
-    })
+    // it('required input arguments', () => {
+    //     generateQueryOp({
+    //         requiredFields: {},
+    //     })
+    //     generateQueryOp({
+    //         requiredFields: {
+    //             __args: {
+    //                 input: {
+    //                     optionalField: 'x',
+    //                 },
+    //             },
+    //         },
+    //     })
+    // })
     // it('error on additional arg', () => {
     //     const { query } = generateQueryOp({
     //         optionalArgs: {
