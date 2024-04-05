@@ -105,7 +105,7 @@ const parseRequest = (
         }
 
         const fieldsSelection = fieldNames
-            .filter((f) => !['__scalar', '__name'].includes(f))
+            .filter((f) => !['__scalar', '__name', '__fragmentOn'].includes(f))
             .map((f) => {
                 const parsed = parseRequest(fields[f], ctx, [...path, f])
 
