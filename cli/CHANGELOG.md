@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.4
+
+### Patch Changes
+
+-   fix bug
+
 ## 7.0.3
 
 ### Patch Changes
