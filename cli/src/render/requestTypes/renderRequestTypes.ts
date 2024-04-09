@@ -100,10 +100,6 @@ export function fragmentOn<
 >(name: TypeName, fields: Selection) {
   return { __fragmentOn: name, ...fields } as const;
 }
-  
-// export type InferFragment<T> = T extends { __fragmentOn: infer U extends keyof FragmentsMap }
-//   ? FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>
-//   : never;
 
 // credits: https://stackoverflow.com/a/54487392
 type OmitDistributive<T, K extends PropertyKey> = T extends any
@@ -124,6 +120,46 @@ export namespace fragmentOn {
       ? OmitRecursively<FieldsSelection<FragmentsMap[U]["root"], Omit<T, "__fragmentOn">>, "__fragmentOn">
       : never;
   }
+
+
+// This is a BaseHub-specific thing:
+
+type RecursiveCollection<T, Key extends keyof T> = T & {
+[key in Key]: { items: RecursiveCollection<T, Key> };
+};
+
+export function fragmentOnRecursiveCollection<
+  TypeName extends keyof FragmentsMap,
+  Selection extends FragmentsMap[TypeName]["selection"],
+  RecursiveKey extends keyof FragmentsMap[TypeName]["selection"]
+>(
+  name: TypeName,
+  fields: Selection,
+  options: {
+    recursiveKey: RecursiveKey;
+    levels: number;
+    getLevelArgs?: (level: number) => unknown;
+  }
+) {
+  let current = {
+    ...fields,
+  } as RecursiveCollection<
+    { readonly __fragmentOn: TypeName } & Selection,
+    RecursiveKey
+  >;
+  if (options.levels > 0) {
+    current[options.recursiveKey] = {
+      ...(options.getLevelArgs
+        ? { __args: options.getLevelArgs(options.levels) }
+        : {}),
+      items: fragmentOnRecursiveCollection(name, fields, {
+        ...options,
+        levels: options.levels - 1,
+      }),
+    } as any;
+  }
+  return current;
+}
 
 `
 
