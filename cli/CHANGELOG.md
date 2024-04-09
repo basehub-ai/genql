@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.6
+
+### Patch Changes
+
+-   export fragmentOnRecursiveCollection
+
 ## 7.0.5
 
 ### Patch Changes
