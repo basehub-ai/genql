@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.5
+
+### Patch Changes
+
+-   introduce fragmentOnRecursiveCollection (a basehub specific thing)
+
 ## 7.0.4
 
 ### Patch Changes
