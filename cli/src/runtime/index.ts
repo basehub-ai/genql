@@ -1,12 +1,12 @@
-export { createClient } from './createClient'
-export type { ClientOptions } from './createClient'
-export type { FieldsSelection } from './typeSelection'
-export { generateGraphqlOperation } from './generateGraphqlOperation'
-export type { GraphqlOperation } from './generateGraphqlOperation'
-export { linkTypeMap } from './linkTypeMap'
+export { createClient } from './_create-client'
+export type { ClientOptions } from './_create-client'
+export type { FieldsSelection } from './_type-selection'
+export { generateGraphqlOperation } from './_generate-graphql-operation'
+export type { GraphqlOperation } from './_generate-graphql-operation'
+export { linkTypeMap } from './_link-type-map'
 // export { Observable } from 'zen-observable-ts'
-export { createFetcher } from './fetcher'
-export { GenqlError } from './error'
+export { createFetcher } from './_fetcher'
+export { GenqlError } from './_error'
 export const everything = {
     __scalar: true,
 }

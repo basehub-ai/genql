@@ -1,4 +1,4 @@
-import { FieldsSelection } from './runtime/typeSelection'
+import { FieldsSelection } from './runtime/_type-selection'
 
 // types requirements
 /*

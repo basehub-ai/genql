@@ -1,4 +1,4 @@
-import type { LinkedField, LinkedType } from './types'
+import type { LinkedField, LinkedType } from './_types'
 
 export interface Args {
     [arg: string]: any | undefined

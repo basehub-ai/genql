@@ -1,8 +1,8 @@
-import { QueryBatcher } from './batcher'
+import { QueryBatcher } from './_batcher'
 
-import type { ClientOptions } from './createClient'
-import type { GraphqlOperation } from './generateGraphqlOperation'
-import { GenqlError } from './error'
+import type { ClientOptions } from './_create-client'
+import type { GraphqlOperation } from './_generate-graphql-operation'
+import { GenqlError } from './_error'
 
 export interface Fetcher {
     (gql: GraphqlOperation): Promise<any>
@@ -30,31 +30,33 @@ export const createFetcher = ({
         throw new Error('url or fetcher is required')
     }
 
-    fetcher = fetcher || (async (body) => {
-        let headersObject =
-            typeof headers == 'function' ? await headers() : headers
-        headersObject = headersObject || {}
-        if (typeof fetch === 'undefined' && !_fetch) {
-            throw new Error(
-                'Global `fetch` function is not available, pass a fetch polyfill to Genql `createClient`',
-            )
-        }
-        let fetchImpl = _fetch || fetch
-        const res = await fetchImpl(url!, {
-            headers: {
-                'Content-Type': 'application/json',
-                ...headersObject,
-            },
-            method: 'POST',
-            body: JSON.stringify(body),
-            ...rest,
+    fetcher =
+        fetcher ||
+        (async (body) => {
+            let headersObject =
+                typeof headers == 'function' ? await headers() : headers
+            headersObject = headersObject || {}
+            if (typeof fetch === 'undefined' && !_fetch) {
+                throw new Error(
+                    'Global `fetch` function is not available, pass a fetch polyfill to Genql `createClient`',
+                )
+            }
+            let fetchImpl = _fetch || fetch
+            const res = await fetchImpl(url!, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...headersObject,
+                },
+                method: 'POST',
+                body: JSON.stringify(body),
+                ...rest,
+            })
+            if (!res.ok) {
+                throw new Error(`${res.statusText}: ${await res.text()}`)
+            }
+            const json = await res.json()
+            return json
         })
-        if (!res.ok) {
-            throw new Error(`${res.statusText}: ${await res.text()}`)
-        }
-        const json = await res.json()
-        return json
-    })
 
     if (!batch) {
         return async (body) => {
@@ -90,7 +92,8 @@ export const createFetcher = ({
             return json.data
         }
         throw new Error(
-            'Genql batch fetcher returned unexpected result ' + JSON.stringify(json),
+            'Genql batch fetcher returned unexpected result ' +
+                JSON.stringify(json),
         )
     }
 }

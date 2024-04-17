@@ -1,7 +1,7 @@
 import { GraphQLNamedType } from 'graphql'
 import { toClientSchema } from '../../testHelpers/render'
 import { RenderContext } from '../common/RenderContext'
-import { Type } from '../../runtime/types'
+import { Type } from '../../runtime/_types'
 import { objectType } from './objectType'
 import { scalarType } from './scalarType'
 import { unionType } from './unionType'
@@ -34,8 +34,6 @@ const testCase = async (
             expect(renderer(type, ctx)).toEqual(expected)
         }
     }
-
-    
 }
 
 test('scalarType', () =>

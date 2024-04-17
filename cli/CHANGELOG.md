@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.7
+
+### Patch Changes
+
+-   underscore runtime files to prevent conflicts with nextjs file conventions
+
 ## 7.0.6
 
 ### Patch Changes

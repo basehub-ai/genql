@@ -1,9 +1,9 @@
-import { type BatchOptions, createFetcher } from './fetcher'
-import type { ExecutionResult, LinkedType } from './types'
+import { type BatchOptions, createFetcher } from './_fetcher'
+import type { ExecutionResult, LinkedType } from './_types'
 import {
     generateGraphqlOperation,
     type GraphqlOperation,
-} from './generateGraphqlOperation'
+} from './_generate-graphql-operation'
 
 export type Headers =
     | HeadersInit
