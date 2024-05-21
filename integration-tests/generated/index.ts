@@ -21,8 +21,7 @@ import types from './types'
 export {
   fragmentOn,
   fragmentOnRecursiveCollection,
-  QueryGenqlSelection,
-  QueryResult,
+  type QueryGenqlSelection,
 } from './schema'
 const typeMap = linkTypeMap(types as any)
 

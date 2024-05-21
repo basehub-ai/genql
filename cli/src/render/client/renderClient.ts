@@ -40,7 +40,7 @@ ${renderClientTypesImports({ mutationType, queryType, subscriptionType })}
   export { GenqlError }
 
   import types from './types'
-  export { fragmentOn, fragmentOnRecursiveCollection, QueryGenqlSelection, QueryResult } from './schema'
+  export { fragmentOn, fragmentOnRecursiveCollection, type QueryGenqlSelection } from './schema'
   const typeMap = linkTypeMap(types as any)
 
   ${renderClientType({ mutationType, queryType, subscriptionType })}

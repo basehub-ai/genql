@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 7.0.8
+
+### Patch Changes
+
+-   Fix: export QueryGenqlSelection as a type
+
 ## 7.0.7
 
 ### Patch Changes
