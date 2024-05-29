@@ -1,5 +1,17 @@
 # @genql/cli
 
+## 8.0.0
+
+### Major Changes
+
+-   Change the way we parse select fields
+
+## 7.0.9
+
+### Patch Changes
+
+-   support scalars for select fields
+
 ## 7.0.8
 
 ### Patch Changes

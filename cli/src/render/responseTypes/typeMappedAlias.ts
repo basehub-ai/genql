@@ -17,6 +17,30 @@ export const getTypeMappedAlias = (
     ctx: RenderContext,
 ) => {
     const map = { ...knownTypes, ...(ctx?.config?.scalarTypes || {}) }
+
+    if (type.name.startsWith('BSHBSelect')) {
+        try {
+            // our custom select scalar
+            const acceptedValues = JSON.parse(
+                type.description || '[]',
+            ) as string[]
+
+            let result = ''
+            if (acceptedValues) {
+                result += acceptedValues.map((v) => `'${v}'`).join(' | ')
+            }
+
+            if (!result) {
+                // fallback
+                result = 'string'
+            }
+
+            return result
+        } catch (err) {
+            // noop
+        }
+    }
+
     return map?.[type.name] || 'any'
 }
 
