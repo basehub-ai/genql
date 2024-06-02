@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 8.0.1
+
+### Patch Changes
+
+-   auto stringify incoming args that need to be strings
+
 ## 8.0.0
 
 ### Major Changes

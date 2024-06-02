@@ -62,8 +62,19 @@ const parseRequest = (
                 )
             }
 
+            const shouldStringifyValue = ['String', 'String!'].includes(
+                typing[1],
+            )
+            let value = args[argName]
+            if (shouldStringifyValue) {
+                if (typeof value === 'object') {
+                    // stringify the object
+                    value = JSON.stringify(value)
+                }
+            }
+
             ctx.variables[varName] = {
-                value: args[argName],
+                value,
                 typing,
             }
 
