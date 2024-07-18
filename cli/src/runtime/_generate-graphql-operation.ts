@@ -1,3 +1,4 @@
+import { aliasSeparator } from './_aliasing'
 import type { LinkedField, LinkedType } from './_types'
 
 export interface Args {
@@ -35,6 +36,7 @@ const parseRequest = (
     request: Request | undefined,
     ctx: Context,
     path: string[],
+    options?: { aliasPrefix?: string },
 ): string => {
     if (typeof request === 'object' && '__args' in request) {
         const args: any = request.__args
@@ -43,7 +45,7 @@ const parseRequest = (
         const argNames = Object.keys(args)
 
         if (argNames.length === 0) {
-            return parseRequest(fields, ctx, path)
+            return parseRequest(fields, ctx, path, options)
         }
 
         const field = getFieldFromPath(ctx.root, path)
@@ -80,7 +82,7 @@ const parseRequest = (
 
             return `${argName}:$${varName}`
         })
-        return `(${argStrings})${parseRequest(fields, ctx, path)}`
+        return `(${argStrings})${parseRequest(fields, ctx, path, options)}`
     } else if (typeof request === 'object' && Object.keys(request).length > 0) {
         const fields = request
         const fieldNames = Object.keys(fields).filter((k) => Boolean(fields[k]))
@@ -110,6 +112,14 @@ const parseRequest = (
                         type.name
                     }{${scalarFields
                         .filter((f) => !falsyFieldNames.has(f))
+                        .map(
+                            (f) =>
+                                `${
+                                    options?.aliasPrefix
+                                        ? `${options.aliasPrefix}${aliasSeparator}${f}: `
+                                        : ''
+                                }${f}`,
+                        )
                         .join(',')}}`,
                 )
             }
@@ -118,11 +128,13 @@ const parseRequest = (
         const fieldsSelection = fieldNames
             .filter((f) => !['__scalar', '__name', '__fragmentOn'].includes(f))
             .map((f) => {
-                const parsed = parseRequest(fields[f], ctx, [...path, f])
-
                 if (f.startsWith('on_')) {
                     ctx.fragmentCounter++
                     const implementationFragment = `f${ctx.fragmentCounter}`
+                    const parsed = parseRequest(fields[f], ctx, [...path, f], {
+                        ...options,
+                        aliasPrefix: implementationFragment,
+                    })
 
                     const typeMatch = f.match(/^on_(.+)/)
 
@@ -135,7 +147,17 @@ const parseRequest = (
 
                     return `...${implementationFragment}`
                 } else {
-                    return `${f}${parsed}`
+                    const parsed = parseRequest(
+                        fields[f],
+                        ctx,
+                        [...path, f],
+                        options,
+                    )
+                    return `${
+                        options?.aliasPrefix
+                            ? `${options.aliasPrefix}${aliasSeparator}${f}: `
+                            : ''
+                    }${f}${parsed}`
                 }
             })
             .concat(scalarFieldsFragment ? [`...${scalarFieldsFragment}`] : [])

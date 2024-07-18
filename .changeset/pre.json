@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "canary",
+  "initialVersions": {
+    "@basehub/genql": "8.0.1",
+    "integration-tests": "2.10.0"
+  },
+  "changesets": [
+    "twelve-snails-sneeze"
+  ]
+}

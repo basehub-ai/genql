@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.0
+
+### Major Changes
+
+-   auto alias fields under unions to prevent conflicts
+
 ## 8.0.1
 
 ### Patch Changes
