@@ -66,6 +66,8 @@ export const createClient = ({
     return client as any
 }
 
+createClient.replaceSystemAliases = replaceSystemAliases
+
 function replaceSystemAliases(obj: unknown): any {
     if (typeof obj !== 'object' || obj === null) {
         return obj

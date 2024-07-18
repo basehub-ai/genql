@@ -6,6 +6,7 @@
     "integration-tests": "2.10.0"
   },
   "changesets": [
+    "sour-lobsters-warn",
     "twelve-snails-sneeze"
   ]
 }
