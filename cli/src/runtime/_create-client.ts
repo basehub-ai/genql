@@ -4,7 +4,7 @@ import {
     generateGraphqlOperation,
     type GraphqlOperation,
 } from './_generate-graphql-operation'
-import { aliasSeparator } from './_aliasing'
+import { replaceSystemAliases } from './_aliasing'
 
 export type Headers =
     | HeadersInit
@@ -67,26 +67,3 @@ export const createClient = ({
 }
 
 createClient.replaceSystemAliases = replaceSystemAliases
-
-function replaceSystemAliases(obj: unknown): any {
-    if (typeof obj !== 'object' || obj === null) {
-        return obj
-    }
-
-    if (Array.isArray(obj)) {
-        return obj.map((item) => replaceSystemAliases(item))
-    }
-
-    const newObj = {}
-    for (const [key, value] of Object.entries(obj)) {
-        if (key.includes(aliasSeparator)) {
-            const [prefix, ...rest] = key.split(aliasSeparator)
-            const newKey = rest.join(aliasSeparator) // In case there are multiple __alias__ in the key
-            newObj[newKey] = replaceSystemAliases(value)
-        } else {
-            newObj[key] = replaceSystemAliases(value)
-        }
-    }
-
-    return newObj
-}

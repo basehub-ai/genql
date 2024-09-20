@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.2
+
+### Minor Changes
+
+-   pass alias thing to .js
+
 ## 9.0.0-canary.1
 
 ### Patch Changes
