@@ -20,6 +20,7 @@ type Result = {
 }
 type Fetcher = (
     batchedQuery: GraphqlOperation | Array<GraphqlOperation>,
+    extraFetchOptions?: Partial<RequestInit>,
 ) => Promise<Array<Result>>
 type Options = {
     batchInterval?: number

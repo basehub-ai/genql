@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.4
+
+### Minor Changes
+
+-   receive extra fetch options with callback
+
 ## 9.0.0-canary.2
 
 ### Minor Changes

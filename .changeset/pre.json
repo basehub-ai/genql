@@ -6,6 +6,7 @@
     "integration-tests": "2.10.0"
   },
   "changesets": [
+    "lazy-goats-smile",
     "metal-jeans-poke",
     "sour-lobsters-warn",
     "twelve-snails-sneeze"

@@ -5,7 +5,10 @@ import type { GraphqlOperation } from './_generate-graphql-operation'
 import { GenqlError } from './_error'
 
 export interface Fetcher {
-    (gql: GraphqlOperation): Promise<any>
+    (
+        gql: GraphqlOperation,
+        extraFetchOptions?: Partial<RequestInit>,
+    ): Promise<any>
 }
 
 export type BatchOptions = {
@@ -32,7 +35,7 @@ export const createFetcher = ({
 
     fetcher =
         fetcher ||
-        (async (body) => {
+        (async (body, extraFetchOptions) => {
             let headersObject =
                 typeof headers == 'function' ? await headers() : headers
             headersObject = headersObject || {}
@@ -42,6 +45,15 @@ export const createFetcher = ({
                 )
             }
             let fetchImpl = _fetch || fetch
+
+            if (extraFetchOptions?.headers) {
+                headersObject = {
+                    ...headersObject,
+                    ...extraFetchOptions.headers,
+                }
+                delete extraFetchOptions.headers
+            }
+
             const res = await fetchImpl(url!, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,6 +62,7 @@ export const createFetcher = ({
                 method: 'POST',
                 body: JSON.stringify(body),
                 ...rest,
+                ...extraFetchOptions,
             })
             if (!res.ok) {
                 throw new Error(`${res.statusText}: ${await res.text()}`)
@@ -59,8 +72,8 @@ export const createFetcher = ({
         })
 
     if (!batch) {
-        return async (body) => {
-            const json = await fetcher!(body)
+        return async (body, extraFetchOptions) => {
+            const json = await fetcher!(body, extraFetchOptions)
             if (Array.isArray(json)) {
                 return json.map((json) => {
                     if (json?.errors?.length) {
@@ -78,9 +91,9 @@ export const createFetcher = ({
     }
 
     const batcher = new QueryBatcher(
-        async (batchedQuery) => {
+        async (batchedQuery, extraFetchOptions) => {
             // console.log(batchedQuery) // [{ query: 'query{user{age}}', variables: {} }, ...]
-            const json = await fetcher!(batchedQuery)
+            const json = await fetcher!(batchedQuery, extraFetchOptions)
             return json as any
         },
         batch === true ? DEFAULT_BATCH_OPTIONS : batch,
