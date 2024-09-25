@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.5
+
+### Patch Changes
+
+-   fix headers being overriden
+
 ## 9.0.0-canary.4
 
 ### Minor Changes
