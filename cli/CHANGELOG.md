@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.6
+
+### Patch Changes
+
+-   implement getExtraFetchOptions
+
 ## 9.0.0-canary.5
 
 ### Patch Changes
