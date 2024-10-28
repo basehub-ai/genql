@@ -139,7 +139,7 @@ export class QueryBatcher {
     constructor(
         fetcher: Fetcher,
         {
-            batchInterval = 6,
+            batchInterval = 16,
             shouldBatch = true,
             maxBatchSize = 0,
         }: Options = {},

@@ -37,7 +37,8 @@ export const createClient = ({
     getExtraFetchOptions?: (
         op: 'query' | 'mutation',
         body: GraphqlOperation,
-    ) => Partial<RequestInit>
+        originalRequest: any,
+    ) => Partial<RequestInit> | Promise<Partial<RequestInit>>
 }) => {
     const fetcher = createFetcher(options)
     const client: {
@@ -46,21 +47,23 @@ export const createClient = ({
     } = {}
 
     if (queryRoot) {
-        client.query = (request: any) => {
+        client.query = async (request: any) => {
             if (!queryRoot) throw new Error('queryRoot argument is missing')
 
             const body = generateGraphqlOperation('query', queryRoot, request)
-            const extraFetchOptions = getExtraFetchOptions?.('query', body)
-
-            const resultPromise = fetcher(body, extraFetchOptions).then(
-                (result) => replaceSystemAliases(result),
+            const extraFetchOptions = await getExtraFetchOptions?.(
+                'query',
+                body,
+                request,
             )
 
-            return resultPromise
+            return await fetcher(body, extraFetchOptions).then((result) =>
+                replaceSystemAliases(result),
+            )
         }
     }
     if (mutationRoot) {
-        client.mutation = (request: any) => {
+        client.mutation = async (request: any) => {
             if (!mutationRoot)
                 throw new Error('mutationRoot argument is missing')
 
@@ -69,13 +72,15 @@ export const createClient = ({
                 mutationRoot,
                 request,
             )
-            const extraFetchOptions = getExtraFetchOptions?.('mutation', body)
-            const resultPromise = fetcher(
+            const extraFetchOptions = await getExtraFetchOptions?.(
+                'mutation',
+                body,
+                request,
+            )
+            return await fetcher(
                 generateGraphqlOperation('mutation', mutationRoot, request),
                 extraFetchOptions,
             )
-
-            return resultPromise
         }
     }
 
