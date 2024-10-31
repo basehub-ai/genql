@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.7
+
+### Patch Changes
+
+-   handle event types
+
 ## 9.0.0-canary.6
 
 ### Patch Changes

@@ -39,6 +39,12 @@ export const getTypeMappedAlias = (
         } catch (err) {
             // noop
         }
+    } else if (type.name.startsWith('bshb_event_')) {
+        const parsed = JSON.parse(type.description || '{}') as {
+            keyType: string
+            schemaType: string
+        }
+        return `${parsed.keyType},\n    schema_${type.name}: ${parsed.schemaType}`
     }
 
     return map?.[type.name] || 'any'
