@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.8
+
+### Patch Changes
+
+-   support BSHBEventSchema scalar type
+
 ## 9.0.0-canary.7
 
 ### Patch Changes
