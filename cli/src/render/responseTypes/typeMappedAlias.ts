@@ -39,17 +39,27 @@ export const getTypeMappedAlias = (
         } catch (err) {
             // noop
         }
-    } else if (type.name.startsWith('BSHBEventSchema')) {
-        const parsed = JSON.parse(type.description || '{}') as {
-            schemaType: string
-        }
-        return parsed.schemaType
     } else if (type.name.startsWith('bshb_event_')) {
         const parsed = JSON.parse(type.description || '{}') as {
             keyType: string
             schemaType: string
         }
         return `${parsed.keyType},\n    schema_${type.name}: ${parsed.schemaType}`
+    }
+
+    // catch all for any type that wants to send a custom type via description
+    try {
+        const parsed = JSON.parse(type.description || '{}') as unknown
+        if (
+            parsed &&
+            typeof parsed === 'object' &&
+            'schemaType' in parsed &&
+            typeof parsed.schemaType === 'string'
+        ) {
+            return parsed.schemaType
+        }
+    } catch (err) {
+        // noop
     }
 
     return map?.[type.name] || 'any'

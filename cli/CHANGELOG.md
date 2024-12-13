@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.9
+
+### Patch Changes
+
+-   add catchall for any type that needs to send its type via description
+
 ## 9.0.0-canary.8
 
 ### Patch Changes
