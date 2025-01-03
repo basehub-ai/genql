@@ -1,5 +1,11 @@
 # @genql/cli
 
+## 9.0.0-canary.10
+
+### Patch Changes
+
+-   support bshb*workflow*
+
 ## 9.0.0-canary.9
 
 ### Patch Changes
