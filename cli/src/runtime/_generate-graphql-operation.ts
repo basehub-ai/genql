@@ -99,6 +99,12 @@ const parseRequest = (
 
         let scalarFieldsFragment: string | undefined
 
+        const validFieldNames = fieldNames.filter((f) => {
+            if (['__scalar', '__name', '__fragmentOn'].includes(f)) return true
+            if (f.startsWith('on_')) return true
+            return type.fields && f in type.fields
+        })
+
         if (fieldNames.includes('__scalar')) {
             const falsyFieldNames = new Set(
                 Object.keys(fields).filter((k) => !Boolean(fields[k])),
@@ -125,7 +131,7 @@ const parseRequest = (
             }
         }
 
-        const fieldsSelection = fieldNames
+        const fieldsSelection = validFieldNames
             .filter((f) => !['__scalar', '__name', '__fragmentOn'].includes(f))
             .map((f) => {
                 if (f.startsWith('on_')) {
