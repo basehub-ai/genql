@@ -87,12 +87,6 @@ const parseRequest = (
         const fields = request
         const fieldNames = Object.keys(fields).filter((k) => Boolean(fields[k]))
 
-        if (fieldNames.length === 0) {
-            throw new Error(
-                `field selection should not be empty: ${path.join('.')}`,
-            )
-        }
-
         const type =
             path.length > 0 ? getFieldFromPath(ctx.root, path).type : ctx.root
         const scalarFields = type.scalar
@@ -104,6 +98,10 @@ const parseRequest = (
             if (f.startsWith('on_')) return true
             return type.fields && f in type.fields
         })
+
+        if (validFieldNames.length === 0) {
+            return ''
+        }
 
         if (fieldNames.includes('__scalar')) {
             const falsyFieldNames = new Set(
@@ -153,12 +151,40 @@ const parseRequest = (
 
                     return `...${implementationFragment}`
                 } else {
+                    const field = type.fields?.[f]
+                    if (!field) return ''
+
+                    // For scalar fields or fields without subfields, just return the field name
+                    if (!field.type.fields) {
+                        return `${
+                            options?.aliasPrefix
+                                ? `${options.aliasPrefix}${aliasSeparator}${f}: `
+                                : ''
+                        }${f}`
+                    }
+
+                    // For object fields, parse recursively
                     const parsed = parseRequest(
                         fields[f],
                         ctx,
                         [...path, f],
                         options,
                     )
+
+                    // If the parsed result is empty and this is an object type,
+                    // we should include at least one field or it will be invalid GraphQL
+                    if (!parsed && field.type.fields) {
+                        // Get the first scalar field as a default selection
+                        const firstScalar = field.type.scalar?.[0]
+                        if (firstScalar) {
+                            return `${
+                                options?.aliasPrefix
+                                    ? `${options.aliasPrefix}${aliasSeparator}${f}: `
+                                    : ''
+                            }${f}{${firstScalar}}`
+                        }
+                    }
+
                     return `${
                         options?.aliasPrefix
                             ? `${options.aliasPrefix}${aliasSeparator}${f}: `
@@ -166,10 +192,11 @@ const parseRequest = (
                     }${f}${parsed}`
                 }
             })
+            .filter(Boolean)
             .concat(scalarFieldsFragment ? [`...${scalarFieldsFragment}`] : [])
             .join(',')
 
-        return `{${fieldsSelection}}`
+        return fieldsSelection ? `{${fieldsSelection}}` : ''
     } else {
         return ''
     }
